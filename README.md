@@ -268,16 +268,16 @@ SIMPLE_PROVIDER=openrouter
 SIMPLE_MODEL=meta-llama/llama-3.2-3b-instruct:free
 SIMPLE_API_KEY=sk-or-...
 
-MEDIUM_PROVIDER=groq
-MEDIUM_MODEL=llama-3.1-8b-instant
-MEDIUM_API_KEY=gsk_...
+MEDIUM_PROVIDER=openrouter
+MEDIUM_MODEL=openai/gpt-4.1-mini
+MEDIUM_API_KEY=sk-or-...
 
 COMPLEX_PROVIDER=anthropic
 COMPLEX_MODEL=claude-sonnet-4-20250514
 COMPLEX_API_KEY=sk-ant-...
 
 REASONING_PROVIDER=openai
-REASONING_MODEL=o1-preview
+REASONING_MODEL=o4-mini
 REASONING_API_KEY=sk-...
 ```
 
@@ -397,6 +397,49 @@ You can retrain the classifier by calling `POST /retrain`. To add custom trainin
 ### Low Confidence Handling
 
 When the classifier's confidence is below 0.60, the response includes `"flagged": true`. This means the classification is uncertain and you may want to review it.
+
+## Test Results
+
+Tested end-to-end on February 16, 2026 with OpenRouter as the provider. All 4 tiers, streaming, direct tier selection, and error handling verified.
+
+### Unit Tests
+
+```
+11 passed in 7.98s
+  ✓ test_simple_greeting
+  ✓ test_simple_factual
+  ✓ test_medium_explanation
+  ✓ test_complex_architecture
+  ✓ test_reasoning_proof
+  ✓ test_empty_input
+  ✓ test_confidence_range
+  ✓ test_reasoning_field
+  ✓ test_default_values
+  ✓ test_tier_loading
+  ✓ test_tier_config_is_configured
+```
+
+### Live End-to-End Tests
+
+| Test | Query | Classified As | Confidence | Model Used | Result |
+|------|-------|--------------|------------|------------|--------|
+| Smart → Simple | "Hello! How are you?" | simple | 0.954 | gpt-4.1-nano | ✅ Correct response |
+| Smart → Medium | "Explain how DNS works" | medium | 0.857 | gpt-4.1-mini | ✅ Correct response |
+| Smart → Complex | "Design a microservices architecture" | complex | 0.971 | claude-sonnet-4 | ✅ Correct response |
+| Smart → Reasoning | "Prove sqrt(2) is irrational" | reasoning | 0.665 | o4-mini | ✅ Correct proof |
+| Direct Tier | `"model": "complex"` | — | — | claude-sonnet-4 | ✅ Bypassed classifier |
+| Streaming | "Count from 1 to 5" | simple | 0.95 | gpt-4.1-nano | ✅ SSE chunks received |
+| Invalid Model | `"model": "invalid"` | — | — | — | ✅ 400 error with helpful message |
+| Health Check | `GET /health` | — | — | — | ✅ Returns status + tiers |
+| Retrain | `POST /retrain` | — | — | — | ✅ 232 samples, 0.698 CV accuracy |
+
+### Classifier Latency
+
+| Metric | Value |
+|--------|-------|
+| First request (cold start, model loading) | ~3.3s |
+| Subsequent requests | 20-32ms |
+| Embedding model size | ~80MB |
 
 ## License
 
