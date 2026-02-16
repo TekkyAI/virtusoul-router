@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "virtusoul-router"
-version = "0.1.0"
+version = "0.1.2"
 description = "Intelligent LLM router with ML-based query classification. Route prompts to the right model automatically."
 readme = "README.md"
 license = "MIT"
