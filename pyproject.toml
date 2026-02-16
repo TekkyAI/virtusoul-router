@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "virtusoul-router"
+version = "0.1.0"
+description = "Intelligent LLM router with ML-based query classification. Route prompts to the right model automatically."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "VirtuSoul", email = "hello@virtusoul.io"},
+]
+keywords = ["llm", "router", "ai", "openai", "classifier", "proxy", "smart-routing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "httpx>=0.25.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "sentence-transformers>=2.2.0",
+    "scikit-learn>=1.3.0",
+    "numpy>=1.24.0",
+    "joblib>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/VirtuSoul/virtusoul-router"
+Documentation = "https://github.com/VirtuSoul/virtusoul-router#readme"
+Repository = "https://github.com/VirtuSoul/virtusoul-router"
+Issues = "https://github.com/VirtuSoul/virtusoul-router/issues"
+
+[project.scripts]
+virtusoul-router = "virtusoul_router.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["virtusoul_router*"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 120
