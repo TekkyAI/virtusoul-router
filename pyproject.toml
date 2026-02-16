@@ -7,7 +7,7 @@ name = "virtusoul-router"
 version = "0.1.0"
 description = "Intelligent LLM router with ML-based query classification. Route prompts to the right model automatically."
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 requires-python = ">=3.9"
 authors = [
     {name = "VirtuSoul", email = "hello@virtusoul.io"},
@@ -16,7 +16,6 @@ keywords = ["llm", "router", "ai", "openai", "classifier", "proxy", "smart-routi
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -45,10 +44,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/VirtuSoul/virtusoul-router"
-Documentation = "https://github.com/VirtuSoul/virtusoul-router#readme"
-Repository = "https://github.com/VirtuSoul/virtusoul-router"
-Issues = "https://github.com/VirtuSoul/virtusoul-router/issues"
+Homepage = "https://github.com/TekkyAI/virtusoul-router"
+Documentation = "https://github.com/TekkyAI/virtusoul-router#readme"
+Repository = "https://github.com/TekkyAI/virtusoul-router"
+Issues = "https://github.com/TekkyAI/virtusoul-router/issues"
 
 [project.scripts]
 virtusoul-router = "virtusoul_router.cli:main"
